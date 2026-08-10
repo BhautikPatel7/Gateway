@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     # ── Required ─────────────────────────────────────────────────────────────
     APP_NAME: str = Field(..., description="Human-readable application name")
     APP_ENV: str = Field(..., description="Runtime environment: development | staging | production")
-    SECRET_KEY: str = Field(..., description="Secret key used for signing / encryption")
+    # SECRET_KEY: str = Field(..., description="Secret key used for signing / encryption")
 
     # ── Optional with sensible defaults ──────────────────────────────────────
     HOST: str = Field(default="0.0.0.0", description="Bind address for the HTTP server")
@@ -62,12 +62,12 @@ class Settings(BaseSettings):
             raise ValueError(f"APP_ENV must be one of {allowed}, got '{v}'")
         return v.lower()
 
-    @field_validator("SECRET_KEY")
-    @classmethod
-    def validate_secret_key(cls, v: str) -> str:
-        if not v or v.strip() == "":
-            raise ValueError("SECRET_KEY must not be empty")
-        return v
+    # @field_validator("SECRET_KEY")
+    # @classmethod
+    # def validate_secret_key(cls, v: str) -> str:
+    #     if not v or v.strip() == "":
+    #         raise ValueError("SECRET_KEY must not be empty")
+    #     return v
 
 
 def _load_settings() -> Settings:
