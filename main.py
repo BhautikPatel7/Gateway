@@ -8,6 +8,11 @@ Run directly:
 
 Or via uvicorn (recommended for development):
     uvicorn src.app:app --reload --host 0.0.0.0 --port 8002
+
+
+
+read STARTUP.md for start the file
+Read AI Decisions.md for understanding how I have evolution this solution.
 """
 
 import uvicorn
