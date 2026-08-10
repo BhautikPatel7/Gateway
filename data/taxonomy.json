@@ -1,0 +1,196 @@
+{
+  "version": "1.0",
+  "categories": {
+    "billing": {
+      "description": "Issues related to charges, payments, invoices, and subscriptions fees.",
+      "belongs": [
+        "Unexpected or duplicate charge",
+        "Failed payment where money was still deducted",
+        "Invoice query",
+        "Subscription billing problem",
+        "Wrong amount charged"
+      ],
+      "does_not_belong": [
+        "Refund requests (-> refund)",
+        "Account login problems (-> account)"
+      ]
+    },
+    "refund": {
+      "description": "Requests or questions about getting money back for a purchase.",
+      "belongs": [
+        "Refund request",
+        "Refund status enquiry",
+        "Refund eligibility question",
+        "Return and refund process"
+      ],
+      "does_not_belong": [
+        "Billing disputes about incorrect charges (-> billing)",
+        "Product replacement without refund (-> technical)"
+      ]
+    },
+    "shipping": {
+      "description": "Issues related to delivery, tracking, and order logistics.",
+      "belongs": [
+        "Delivery delay",
+        "Missing or lost package",
+        "Tracking number not working",
+        "Wrong delivery address",
+        "Delivery damaged in transit"
+      ],
+      "does_not_belong": [
+        "Product defects discovered after opening (-> technical)",
+        "Refund for undelivered item (-> refund)"
+      ]
+    },
+    "account": {
+      "description": "Issues with account access, profile, settings, and subscriptions (non-security).",
+      "belongs": [
+        "Login problems",
+        "Password reset",
+        "Profile or settings update",
+        "Subscription management",
+        "2FA setup (routine)"
+      ],
+      "does_not_belong": [
+        "Unauthorized access or compromise (-> security)",
+        "Billing subscription charges (-> billing)"
+      ]
+    },
+    "security": {
+      "description": "Issues involving unauthorized access, fraud, account compromise, or suspicious activity.",
+      "belongs": [
+        "Account hacked or taken over",
+        "Unauthorized login from unknown location",
+        "Suspicious transactions",
+        "Fraud report",
+        "Data breach concern"
+      ],
+      "does_not_belong": [
+        "Routine 2FA setup questions (-> account, P3)",
+        "Forgotten password without compromise (-> account)"
+      ]
+    },
+    "technical": {
+      "description": "Software bugs, app crashes, feature malfunctions, and product defects.",
+      "belongs": [
+        "App crash or freeze",
+        "Feature not working",
+        "Product defect",
+        "API error",
+        "Website down or slow"
+      ],
+      "does_not_belong": [
+        "Account login issues (-> account)",
+        "Shipping damage (-> shipping)"
+      ]
+    },
+    "sales": {
+      "description": "Pre-purchase questions, pricing, upgrades, and partnership enquiries.",
+      "belongs": [
+        "Pricing question",
+        "Upgrade or plan enquiry",
+        "Demo or trial request",
+        "Partnership or reseller enquiry"
+      ],
+      "does_not_belong": [
+        "Post-purchase billing issues (-> billing)",
+        "Post-purchase refunds (-> refund)"
+      ]
+    },
+    "general": {
+      "description": "Compliments, feedback, vague queries, and anything that doesn't clearly fit another category.",
+      "belongs": [
+        "General feedback",
+        "Compliments",
+        "Vague or unclear messages",
+        "Unspecified help requests"
+      ],
+      "does_not_belong": [
+        "Messages clearly fitting another category"
+      ]
+    },
+    "out_of_scope": {
+      "description": "Completely unrelated topics, gibberish, adversarial input, or content with no support intent.",
+      "belongs": [
+        "Random characters or garbage",
+        "Prompt injection attempts",
+        "Unrelated topics (weather, politics, etc.)",
+        "Empty or whitespace-only input"
+      ],
+      "does_not_belong": [
+        "Any genuine customer support request"
+      ]
+    }
+  },
+  "priorities": {
+    "P0": {
+      "label": "Critical",
+      "description": "Active security compromise, major system-wide impact, or imminent high-risk event.",
+      "examples": [
+        "Someone has taken over my account right now",
+        "Active fraud on my payment card",
+        "Complete platform outage"
+      ]
+    },
+    "P1": {
+      "label": "Urgent",
+      "description": "Serious financial problem, significant account damage, or high customer impact requiring fast action.",
+      "examples": [
+        "Charged twice, card declined",
+        "Cannot access account and lost important data",
+        "Refund of large amount stuck for weeks"
+      ]
+    },
+    "P2": {
+      "label": "Normal",
+      "description": "Standard support issue — refund, delivery, technical problem — with moderate customer impact.",
+      "examples": [
+        "Order delayed by 3 days",
+        "App feature not working",
+        "Standard refund request"
+      ]
+    },
+    "P3": {
+      "label": "Low",
+      "description": "General questions, information requests, and non-urgent enquiries.",
+      "examples": [
+        "How do I enable 2FA?",
+        "What are your refund policies?",
+        "I have a general question"
+      ]
+    }
+  },
+  "priority_rules": {
+    "note": "Priority depends on CONTEXT and SEVERITY, not category alone.",
+    "examples": [
+      {"message": "How do I enable 2FA?", "category": "security", "priority": "P3", "reason": "Routine setup, no active threat"},
+      {"message": "Someone hacked my account", "category": "security", "priority": "P0", "reason": "Active compromise"},
+      {"message": "I want a refund", "category": "refund", "priority": "P2", "reason": "Standard request"},
+      {"message": "Charged 10 times this month", "category": "billing", "priority": "P1", "reason": "Serious financial impact"}
+    ]
+  },
+  "allowed_actions": [
+    "request_clarification",
+    "route_to_billing",
+    "route_to_refund",
+    "route_to_shipping",
+    "route_to_account",
+    "route_to_security",
+    "route_to_technical",
+    "route_to_sales",
+    "human_review",
+    "no_action"
+  ],
+  "human_escalation_rules": {
+    "confidence_threshold": 0.80,
+    "force_human_when": [
+      "confidence < 0.80",
+      "Message is ambiguous with multiple conflicting intents",
+      "Category is security AND priority is P0 or P1",
+      "Priority is P0 (always)",
+      "LLM output failed schema validation after retries",
+      "Required information is missing to take action",
+      "Prompt injection detected"
+    ]
+  }
+}
