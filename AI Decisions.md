@@ -65,3 +65,4 @@ See full results in `eval_report.md`.
 5. Optimise with a smaller LLM model, add an `uncategorised` category — if the small LLM cannot classify it, pass to a higher intelligence system to save token cost
 6. Work more closely on prompt to reduce input token count
 7. Over time, add new categories, priorities, and actions based on data to increase accuracy
+8. Create a maintainable repository and code for a long project.
